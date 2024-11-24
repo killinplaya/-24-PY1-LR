@@ -1,22 +1,17 @@
 import json
 
-def task() -> float:
 
-    # Открываем JSON файл и загружаем данные
-    with open('input.json', 'r') as file:
-        data = json.load(file)  # data будет списком словарей
+def calculate_sum(file_path):
 
-    # Переменная для накопления суммы произведений
-    total_sum = 0.0
+    with open(file_path, 'r', encoding='utf-8') as file:
+        data = json.load(file)
 
-    # Проходим по каждому словарю в списке
-    for item in data:
-        # Извлекаем значения "score" и "weight" и вычисляем произведение
-        product = item["score"] * item["weight"]
-        # Добавляем произведение к общей сумме
-        total_sum += product
+    # Используем генератор для вычисления произведений и их суммы
+    total = sum(item['score'] * item['weight'] for item in data)
+    return round(total, 3)
 
-    # Возвращаем сумму произведений, округленную до 3 знаков
-    return round(total_sum, 3)
 
-print(task())
+if __name__ == "__main__":
+    file_path = "input.json"
+    result = calculate_sum(file_path)
+    print(result)
